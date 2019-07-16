@@ -52,7 +52,9 @@ app.controller('mainCtrl', function($scope, recognizeService) {
     //Testing images
                $scope.testImages = [
         
-                                   "https://0.soompi.io/wp-content/uploads/2017/07/26083627/girls-generation-yoona.jpg", "https://0.soompi.io/wp-content/uploads/2017/08/01080459/girls-generation-taeyeon-6.jpg",  "https://0.soompi.io/wp-content/uploads/2017/08/02080838/girls-generation-sunny-6.jpg",
+                                   "https://0.soompi.io/wp-content/uploads/2017/07/26083627/girls-generation-yoona.jpg",
+                                    "https://0.soompi.io/wp-content/uploads/2017/08/02080838/girls-generation-sunny-6.jpg",
+                                   "https://0.soompi.io/wp-content/uploads/2017/08/01080459/girls-generation-taeyeon-6.jpg",
                                     "https://0.soompi.io/wp-content/uploads/2017/07/27081116/girls-generation-tiffany-6.jpg"];
 
 
