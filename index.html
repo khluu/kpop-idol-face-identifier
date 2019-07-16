@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.1.8/semantic.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
+
+    <script src="script.js"></script>
+    <title>KPop Idols - Face Identifier</title>
+</head>
+
+<body ng-app="app" ng-controller="mainCtrl">
+    <div class="ui container">
+        <div class="ui container"></div>
+        <h1>KPop Idols - Face Identifier</h1>
+
+        <!-- Submit form -->
+        <div class="ui form">
+            <div class="field">
+                <div ng-class="{loading: isLoading}" class="ui action input">
+                    <input type="text" ng-model="imageLink" placeholder="Paste the image link here" />
+
+                    <button ng-disabled="isLoading || !imageLink" ng-click="recognize()" class="ui icon primary button">
+                        <span ng-if="!isLoading">
+                                        <i class="search icon"></i>
+                                        Identify</span>
+                        <span ng-if="isLoading">
+                                        <i class="spinner loading icon"></i>
+                                        Searching ... </span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <!-- Display image and identified box-->
+        <div class="source-image">
+            <img ng-if="imageLink" ng-src="{{imageLink}}" id="source-image" class="ui" />
+            <div class="idol-face" ng-repeat="face in faceDisplay" ng-style="face.style">
+                <span class="idol-name">{{face.name}}</span>
+            </div>
+        </div>
+        <br>
+
+        <h2>How to use</h2>
+        Pick an image of the KPop idol that you want to identify and paste the image address into the box above and hit the button.<br><br>
+        <b>Note:</b> It only works for the idols listed below. Since it takes a while to train the system to identify faces and I can't afford the cost to run the API, I only included the most famous groups.
+        The accuracy of this identifier can be guaranteed at 85-90%. If you put in someone not on the list, the program may try to identify he/she as someone else similar. Please take a look at the list before.
+        
+        <!-- List idols and return JSON result -->
+        <div>
+            <br>
+            <h4>List of idols available to identify: </h4>
+            <div class="row">
+                <div>
+                    <div class="column">
+                    <h5>SNSD</h5>
+                    <ul>
+                        <li>Taeyeon</li>
+                        <li>Sunny</li>
+                        <li>Tiffany</li>
+                        <li>Hyoyeon</li>
+                        <li>Yuri</li>
+                        <li>Sooyoung</li>
+                        <li>Yoona</li>
+                        <li>Seohyun</li>
+                    </ul>
+                    
+                    <h5>Red Velvet</h5>
+                    <ul>
+                        <li>Irene</li>
+                        <li>Seulgi</li>
+                        <li>Wendy</li>
+                        <li>Joy</li>
+                        <li>Yeri</li>
+                    </ul>
+                    
+                    <h5>BLACKPINK</h5>
+                    <ul>
+                        <li>Jisoo</li>
+                        <li>Jennie</li>
+                        <li>Rose</li>
+                        <li>Lisa</li>
+                    </ul>
+                    
+                    <h5>BTS</h5>
+                    <ul>
+                        <li>Jin</li>
+                        <li>Suga</li>
+                        <li>J-Hope</li>
+                        <li>RM BTS</li>
+                        <li>Jimin</li>
+                        <li>V BTS</li>
+                        <li>Jungkook</li>
+                    </ul>
+                    
+                    </div>
+                    <div class="column">
+                    <h5>TVXQ (DBSK)</h5>
+                    <ul>
+                        <li>Jaejoong (JYJ)</li>
+                        <li>Yoochun (JYJ)</li>
+                        <li>Junsu (JYJ)</li>
+                        <li>Yunho (DBSK)</li>
+                        <li>Changmin (DBSK)</li>
+                    </ul>
+                    
+                    <h5>Big Bang</h5>
+                    <ul>
+                        <li>T.O.P</li>
+                        <li>Taeyang</li>
+                        <li>G-Dragon</li>
+                        <li>Daesung</li>
+                    </ul>
+                    
+                    <h5>2NE1</h5>
+                    <ul>
+                        <li>Bom</li>
+                        <li>Dara</li>
+                        <li>CL</li>
+                        <li>Minzy</li>
+                    </ul>
+                    
+                    <h5>TWICE</h5>
+                    <ul>
+                        <li>Nayeon</li>
+                        <li>Jeongyeon</li>
+                        <li>Momo</li>
+                        <li>Sana</li>
+                        <li>Jihyo</li>
+                        <li>Mina</li>
+                        <li>Dahyun</li>
+                        <li>Chaeyoung</li>
+                        <li>Tzuyu</li>
+                    </ul>
+                    
+                    <ul>
+                        <li>IU</li>
+                        <li>Ailee</li>
+                    <ul>
+                    </div>
+                    <div class="column">
+                        
+                    <h5>SHINee</h5>
+                    <ul>
+                        <li>Onew</li>
+                        <li>Key</li>
+                        <li>Minho</li>
+                        <li>Taemin</li>
+                    </ul>
+                    
+                    <h5>Wonder Girls</h5>
+                    <ul>
+                        <li>Yubin</li>
+                        <li>Yeeun</li>
+                        <li>Sunye</li>
+                        <li>Sunmi</li>
+                        <li>Hyuna</li>
+                        <li>Sohee</li>
+                        <li>Hyerim</li>
+
+                    </ul>
+                    
+                    <h5>GOT7</h5>
+                    <ul>
+                        <li>Mark</li>
+                        <li>JB</li>
+                        <li>Jackson</li>
+                        <li>Jinyoung</li>
+                        <li>Youngjae</li>
+                        <li>BamBam</li>
+                        <li>Yugyeom</li>
+                    </ul>
+                    
+                    <h5>EXO</h5>
+                    <ul>
+                        <li>Xiumin</li>
+                        <li>Suho</li>
+                        <li>Lay</li>
+                        <li>Baekhyun</li>
+                        <li>Chen</li>
+                        <li>Chanyeol</li>
+                        <li>D.O.</li>
+                        <li>Kai</li>
+                        <li>Sehun</li>
+                        <li>Luhan</li>
+                        <li>Kris</li>
+                        <li>Tao</li>
+                    </ul>
+                    </div>
+                </div>
+                <!-- <div class="ui bulleted list">
+                    <div class="item" ng-repeat="idol in idols">{{idol}}</div>
+                </div>
+            </div>
+            <div class="twelve wide column">
+                <!-- <h4>JSON result</h4>
+                <div><pre>{{faces | json:2}}</pre>
+                </div> -->
+            </div>
+        </div>
+        <br>
+
+        <!-- Show testing images -->
+        <div>
+            <h4>Test images</h4>
+            <div class="ui four cards">
+                <div class="card" ng-repeat="image in testImages">
+                    <a target="_blank" ng-href="{{image}}" class="image test-thumbnail">
+                        <img ng-src="{{image}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        
+        <h2>Why I made this website</h2>
+        I believe it's really a thing among me and my friends: We usually can't identify KPop idols ourselves since they look a lot similar (except for the most popular ones)<br>
+        Therefore, I had an idea of making a face identifier like this to help those people (including me) to identify the cute singers that they saw but need to know the identity.
+        
+        <br>
+        <br>
+        <div>
+            <h2>Credit</h2>
+            <b>Author:</b> Kevin Luu (<a href="https://github.com/khluu">My Github</a>) <br>
+            <br>
+            <p>I want to thanks Huy Hoang Pham from <a href="http://toidicodedao.com">Toi Di Code Dao</a> for your guide on building a face identifier site using Microsoft Cognitive Services API.<br> Your "JAV Idol Identifier" really inspired me to do this LMAO :))</p>
+            <h5>Technologies used in this website: <br></h5><i>(I didn't build it from Scratch. I followed the above guide, tweaked some code, fixed some bugs, and changed the framework for RestAPI (some techs in that project are not available to use anymore)</i></h2>
+            <ul>
+                <li>Node.JS</li>
+                <li>Express.JS</li>
+                <li>Angular.JS</li>
+                <li>Microsoft Cognitive Services API (Bing Search and Face)</li>
+                <li>Microsoft Azure Web Services</li>
+                <li>HTML/CSS and Javascript</li>
+            </ul>
+            <br>
+        </div>
+    </div>
+</body>
+
+</html>

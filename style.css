@@ -1,0 +1,32 @@
+/* Styles go here */
+
+.source-image {
+    position: relative;
+    display: inline-block;
+}
+
+.idol-face {
+    position: absolute;
+    text-align: left;
+    width: 0;
+    height: 0;
+    border: 2px #009c95 solid;
+    cursor: pointer;
+}
+
+.idol-name {
+    color: #ffff00; /*f26202*/
+    min-width: 200px;
+    position: absolute;
+}
+.column {
+    float: left;
+    width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
