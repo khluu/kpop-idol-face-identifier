@@ -50,7 +50,7 @@ app.controller('mainCtrl', function($scope, recognizeService) {
     }
 
     //Testing images
-               $scope.testImages = ["https://cosmicum.info/img/4ce2c1c510ba09a87f227b36188db12e.jpg", "https://2.bp.blogspot.com/-1D0MQygTOlo/WPihz3-YsRI/AAAAAAABqbo/Bf8JrDLiHGk2K0qMNNG_gSykICXuwr_fwCK4B/s320/snsd%2Bcasio%2B%25281%2529.jpg", "https://i.pinimg.com/originals/ac/79/76/ac79761fb057470520b5aa3d43317c82.png", "https://i.ytimg.com/vi/ejmUXB2kcjQ/maxresdefault.jpg"];
+               $scope.testImages = ["https://0.soompi.io/wp-content/uploads/2017/08/01080459/girls-generation-taeyeon-6.jpg", "https://0.soompi.io/wp-content/uploads/2017/07/27081116/girls-generation-tiffany-6.jpg", "https://0.soompi.io/wp-content/uploads/2017/07/28082003/girls-generation-yuri2.jpg", "https://0.soompi.io/wp-content/uploads/2017/07/26083627/girls-generation-yoona.jpg"];
 
 
     //Idol list
