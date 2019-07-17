@@ -38,7 +38,6 @@ app.factory('recognizeServic', ['$q','$http', function($http) {
 
 app.factory('recognizeService',['$http',($http) => ({
                                                    uploadImage(imgBase64) {
-                                                   //toastr.info("Đang up ảnh");
                                                    const url = 'https://api.cloudinary.com/v1_1/hoangcloud/image/upload';
                                                    
                                                    return $http({
@@ -52,7 +51,6 @@ app.factory('recognizeService',['$http',($http) => ({
                                                    },
                                                    
                                                    uploadImageImgur(imgBase64) {
-                                                   //toastr.info("Đang up ảnh");
                                                    const url = 'https://api.imgur.com/3/image';
                                                    var base = imgBase64.replace('data:image/jpeg;base64,', '').replace('data:image/png;base64,', '').replace('data:image/gif;base64,', '');
                                                    
@@ -81,159 +79,7 @@ app.factory('recognizeService',['$http',($http) => ({
                                                   
                                     }
                                
-                               ) ])
-/*
-app.factory('recognizeService', ['$http', function($http) {uploadImageImgur(imgBase64) {
-                                 //toastr.info("Đang up ảnh");
-                                 const url = 'https://api.imgur.com/3/image';
-                                 var base = imgBase64.replace('data:image/jpeg;base64,', '').replace('data:image/png;base64,', '').replace('data:image/gif;base64,', '');
-                                 
-                                 return $http({
-                                              method: 'POST',
-                                              url,
-                                              headers: {
-                                              'Authorization': 'Client-ID 56e948d072dfed8'
-                                              },
-                                              data: {
-                                              image: base
-                                              }
-                                              });
-                                 }}])
- */
-/*
-app.factory('recognizeService', [
-                                 '$q',
-                                 '$http',
-                                 'toastr',
-                                 ($q, $http, toastr) => ({
-                                                         uploadImage(imgBase64) {
-                                                         toastr.info("Đang up ảnh");
-                                                         const url = 'https://api.cloudinary.com/v1_1/hoangcloud/image/upload';
-                                                         
-                                                         return $http({
-                                                                      method: 'POST',
-                                                                      url,
-                                                                      data: {
-                                                                      upload_preset: 'jav-idols',
-                                                                      file: imgBase64
-                                                                      }
-                                                                      });
-                                                         },
-                                                         
-                                                         uploadImageImgur(imgBase64) {
-                                                         toastr.info("Đang up ảnh");
-                                                         const url = 'https://api.imgur.com/3/image';
-                                                         var base = imgBase64.replace('data:image/jpeg;base64,', '').replace('data:image/png;base64,', '').replace('data:image/gif;base64,', '');
-                                                         
-                                                         return $http({
-                                                                      method: 'POST',
-                                                                      url,
-                                                                      headers: {
-                                                                      'Authorization': 'Client-ID 56e948d072dfed8'
-                                                                      },
-                                                                      data: {
-                                                                      image: base
-                                                                      }
-                                                                      });
-                                                         },
-                                                         getImageSize(imgLink) {
-                                                         return $q((resolve, reject) => {
-                                                                   const img = new Image(); // Create new img element
-                                                                   img.addEventListener("load", () => {
-                                                                                        resolve({width: img.width, height: img.height});
-                                                                                        }, false);
-                                                                   img.src = imgLink; // Set source path
-                                                                   });
-                                                         },
-                                                         
-                                                         checkAdultContent(imgLink) {
-                                                         const key = 'k7dgy05qyfs8uwjvjrjdobt9x17c3yu0gteqyd0qqkomeu3di60kxsrkutl9yge0s2ixiil766r';
-                                                         const url = 'https://jav-recognize.azurewebsites.net/api/CheckAdult';
-                                                         
-                                                         return $http({
-                                                                      method: 'POST',
-                                                                      url,
-                                                                      headers: {
-                                                                      'x-functions-key': key
-                                                                      },
-                                                                      data: {
-                                                                      url: imgLink
-                                                                      }
-                                                                      });
-                                                         },
-                                                         
-                                                         recognizeImage(imgLink) {
-                                                         toastr.info("Đang nhận diện, có thể hơi lâu, vui lòng chờ");
-                                                         const key = 'k7dgy05qyfs8uwjvjrjdobt9x17c3yu0gteqyd0qqkomeu3di60kxsrkutl9yge0s2ixiil766r';
-                                                         const url = 'https://jav-recognize.azurewebsites.net/api/IdolRecognize';
-                                                         
-                                                         return $http({
-                                                                      method: 'POST',
-                                                                      url,
-                                                                      headers: {
-                                                                      'x-functions-key': key
-                                                                      },
-                                                                      data: {
-                                                                      url: imgLink
-                                                                      }
-                                                                      }).then((result) => {
-                                                                              return this.getImageSize(imgLink).then(size => {
-                                                                                                                     toastr.success('Xong rồi ahihi :">"');
-                                                                                                                     const originalWidth = size.width;
-                                                                                                                     const currentWidth = document.querySelector('#source-image').clientWidth;
-                                                                                                                     const ratio = currentWidth / originalWidth;
-                                                                                                                     const faces = result.data.map(r => {
-                                                                                                                                                   const face = r.face.faceRectangle;
-                                                                                                                                                   const faceStyle = {
-                                                                                                                                                   width: `${face.width * ratio}px`,
-                                                                                                                                                   height: `${face.height * ratio}px`,
-                                                                                                                                                   left: `${face.left * ratio}px`,
-                                                                                                                                                   top: `${face.top * ratio}px`
-                                                                                                                                                   };
-                                                                                                                                                   
-                                                                                                                                                   let fontSize = (face.width * ratio / 6);
-                                                                                                                                                   let minFontSize = 15;
-                                                                                                                                                   fontSize = Math.max(fontSize, minFontSize);
-                                                                                                                                                   
-                                                                                                                                                   let candidate = {
-                                                                                                                                                   name: 'Unknown',
-                                                                                                                                                   nameStyle: {
-                                                                                                                                                   width: faceStyle.width,
-                                                                                                                                                   'font-size': `${fontSize}px`,
-                                                                                                                                                   'line-height': `${fontSize - 2}px`,
-                                                                                                                                                   bottom: `-${fontSize}px`
-                                                                                                                                                   }
-                                                                                                                                                   };
-                                                                                                                                                   if (r.candidates.length > 0) {
-                                                                                                                                                   const firstCandidate = r.candidates[0].idol;
-                                                                                                                                                   candidate.name = firstCandidate.name;
-                                                                                                                                                   candidate.link = firstCandidate.link;
-                                                                                                                                                   candidate.thumbnail = firstCandidate.thumbnail;
-                                                                                                                                                   };
-                                                                                                                                                   return {face: faceStyle, candidate};
-                                                                                                                                                   });
-                                                                                                                     
-                                                                                                                     return faces;
-                                                                                                                     });
-                                                                              }, (error) => {
-                                                                              toastr.error('Có lỗi xuất hiện');
-                                                                              
-                                                                              if (error.status == 403) {
-                                                                              toastr.error('Server hiện đang quá tải, vui lòng thử lại sau 30s.');
-                                                                              }
-                                                                              
-                                                                              var errorInfo = error.data.error;
-                                                                              if (errorInfo.code == 'InvalidURL') {
-                                                                              toastr.error('Link ảnh bị lỗi. Vui lòng dùng link khác.');
-                                                                              }
-                                                                              return $q.reject(error);
-                                                                              });
-                                                         }
-                                                         })
-                                 ]);
-
-*/
-app.controller('mainCtrl', function($scope, recognizeService) {
+                               ) ])app.controller('mainCtrl', function($scope, recognizeService) {
     $scope.isLoading = false;
 
     $scope.$watch('imageLink', function(oldValue, newValue) {
