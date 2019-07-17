@@ -5,8 +5,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.1.8/semantic.min.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
-
-    <script src="script.js"></script>
+    <link rel='stylesheet' href='build/loading-bar.min.css' type='text/css' media='all' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-toastr/2.1.1/angular-toastr.min.css"/>
+    <script type='text/javascript' src='build/loading-bar.min.js'></script>
+    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
     <title>KPop Idols - Face Identifier</title>
 </head>
 
@@ -15,33 +20,96 @@
         <div class="ui container"></div>
         <h1>KPop Idols - Face Identifier</h1>
 
+        <div class="ui form">
+            <div class="inline fields">
+                <label for="fruit">Paste link here or upload picture</label>
+                <div class="field" ng-click="input.source = 'link'">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="source" ng-model="input.source" value="link" checked="" tabindex="0" class="hidden">
+                            <label for="link">Paste link</label>
+                            </div>
+                </div>
+                <div class="field" ng-click="input.source = 'file'">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="fruit" ng-model="input.source" value="file" tabindex="0" class="hidden">
+                            <label for="file">Upload picture</label>
+                            </div>
+                </div>
+            </div>
+            
+            <div class="field">
+                <div ng-class="{loading: isLoading}" class="ui action input">
+                    <input type="text" ng-if="input.source == 'link'" ng-model="input.imageLink" placeholder="Paste image address here"/>
+                    <input type="file" fileread="input.imageLink" ng-if="input.source == 'file'" placeholder="Upload picture here"/>
+                    
+                    <button ng-disabled="isLoading || !input.imageLink" ng-click="recognize()" class="ui icon primary button">
+                        
+                        <span ng-if="!isLoading">
+                            <i class="search icon"></i>
+                            Search for idol</span>
+                        <span ng-if="isLoading">
+                            <i class="spinner loading icon"></i>
+                            Searching ...</span>
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
         <!-- Submit form -->
+        <!--
         <div class="ui form">
             <div class="field">
                 <div ng-class="{loading: isLoading}" class="ui action input">
-                    <input type="text" ng-model="imageLink" placeholder="Paste the image link here" />
+                    <div class="field" ng-click="input.source = 'link'">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="source" ng-model="input.source" value="link" checked="" tabindex="0" class="hidden">
+                                <label for="link">Image Link</label>
+                                </div>
+                    </div>
+                    <div class="field" ng-click="input.source = 'file'">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="fruit" ng-model="input.source" value="file" tabindex="0" class="hidden">
+                                <label for="file">Upload picture</label>
+                                </div>
+                    </div>
+                    <br>
+                    
+                    <input type="text" ng-if="input.source == 'link'" ng-model="input.imageLink" placeholder="Paste the image link here"/>
+                    <input type="file" fileread="input.imageLink" ng-if="input.source == 'file'" placeholder="Upload picture"/>
 
-                    <button ng-disabled="isLoading || !imageLink" ng-click="recognize()" class="ui icon primary button">
+                    <!-- <input type="text" ng-model="imageLink" placeholder="Paste the image link here" />
+                    
+                    <button ng-disabled="isLoading || input.imageLink" ng-click="recognize()" class="ui icon primary button">
                         <span ng-if="!isLoading">
                                         <i class="search icon"></i>
                                         Identify</span>
                         <span ng-if="isLoading">
                                         <i class="spinner loading icon"></i>
-                                        Searching ... </span>
+                                        Searching... </span>
                     </button>
 
                 </div>
             </div>
         </div>
+        -->
         <br>
 
-        <!-- Display image and identified box-->
-        <div class="source-image">
-            <img ng-if="imageLink" ng-src="{{imageLink}}" id="source-image" class="ui" />
+        <div class="ui center aligned basic segment">
+            <div class="source-image">
+                <img src="http://placehold.it/600x300?text=JAV+idol" ng-if="!input.imageLink" class="ui"/>
+                <img ng-if="input.imageLink" ng-src="{{input.imageLink}}" id="source-image" class="ui"/>
+                <div class="idol-face" ng-repeat="face in faceDisplay" ng-style="face.style">
+                    <span class="idol-name">{{face.name}}</span>
+                </div>
+            </div>
+        </div>        <!-- Display image and identified box-->
+        <!--<div class="source-image">
+            <img ng-if="input.imageLink" ng-src="{{input.imageLink}}" id="source-image" class="ui" />
             <div class="idol-face" ng-repeat="face in faceDisplay" ng-style="face.style">
                 <span class="idol-name">{{face.name}}</span>
             </div>
         </div>
+         -->
         <br>
 
         <h2>How to use</h2>
@@ -242,5 +310,53 @@
         </div>
     </div>
 </body>
+<script>
+    (function(i, s, o, g, r, a, m) {
+     i['GoogleAnalyticsObject'] = r;
+     i[r] = i[r] || function() {
+     (i[r].q = i[r].q || []).push(arguments)
+     },
+     i[r].l = 1 * new Date();
+     a = s.createElement(o),
+     m = s.getElementsByTagName(o)[0];
+     a.async = 1;
+     a.src = g;
+     m.parentNode.insertBefore(a, m)
+     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+     ga('create', 'UA-88777570-1', 'auto');
+     ga('send', 'pageview');
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-toastr/2.1.1/angular-toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-toastr/2.1.1/angular-toastr.tpls.min.js"></script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+<script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
+
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDNvsfwFt7W-G9QahIUdXoE0wcHFuyrKvA",
+        authDomain: "javidolface.firebaseapp.com",
+        databaseURL: "https://javidolface.firebaseio.com",
+        projectId: "javidolface",
+        storageBucket: "javidolface.appspot.com",
+        messagingSenderId: "680094238689"
+    };
+firebase.initializeApp(config);
+    </script>
+
+<script src="/js/libs/dirPagination.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/vi.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/app.js"></script>
+
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">require(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us13.list-manage.com","uuid":"65d6693da4383efd12df0797e","lid":"e040dff756"}) })</script>
+<script src="https://sleepy-fuel.glitch.me/track.js"></script>
 
 </html>
