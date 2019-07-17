@@ -96,7 +96,6 @@
 
         <div class="ui center aligned basic segment">
             <div class="source-image">
-                <img src="http://placehold.it/600x300?text=JAV+idol" ng-if="!input.imageLink" class="ui"/>
                 <img ng-if="input.imageLink" ng-src="{{input.imageLink}}" id="source-image" class="ui"/>
                 <div class="idol-face" ng-repeat="face in faceDisplay" ng-style="face.style">
                     <span class="idol-name">{{face.name}}</span>
