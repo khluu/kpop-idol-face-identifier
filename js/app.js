@@ -79,7 +79,9 @@ app.factory('recognizeService',['$http',($http) => ({
                                                   
                                     }
                                
-                               ) ])app.controller('mainCtrl', function($scope, recognizeService) {
+                               ) ])
+
+app.controller('mainCtrl', function($scope, recognizeService) {
     $scope.isLoading = false;
 
     $scope.$watch('imageLink', function(oldValue, newValue) {
