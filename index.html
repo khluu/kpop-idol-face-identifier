@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
     <link rel='stylesheet' href='build/loading-bar.min.css' type='text/css' media='all' />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-toastr/2.1.1/angular-toastr.min.css"/>
-    
     <script type='text/javascript' src='build/loading-bar.min.js'></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
@@ -22,17 +22,17 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    <title>KPop Idols Face Identifier</title>
+    <title>K-Pop Idols Face Identifier</title>
 </head>
 
 <body ng-app="app" ng-controller="mainCtrl">
     <div class="ui container">
         <div class="ui container"></div>
-        <h1>KPop Idols - Face Identifier</h1>
+        <h1>K-Pop Idols - Face Identifier</h1>
 
         <div class="ui form">
             <div class="inline fields">
-                <label for="fruit">Paste link here or upload picture</label>
+                <label for="fruit"><h5>Paste link here or upload picture</h5></label>
                 <div class="field" ng-click="input.source = 'link'">
                     <div class="ui radio checkbox">
                         <input type="radio" name="source" ng-model="input.source" value="link" checked="" tabindex="0" class="hidden">
